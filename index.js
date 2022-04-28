@@ -43,3 +43,14 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
+
+
+app.get("/books", (req, res) => {
+  const sql = "SELECT * FROM Books ORDER BY Title"
+  pool.query(sql, [], (err, result) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render("books", { model: result.rows });
+  });
+});
